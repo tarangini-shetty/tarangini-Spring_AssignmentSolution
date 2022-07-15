@@ -18,9 +18,9 @@ import lombok.NoArgsConstructor;
 public class Student {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "studentid")
-	private int studentid;
+	private int studentid = 0;
 	@Column(name = "firstname")
 	private String firstname;
 	@Column(name = "lastname")

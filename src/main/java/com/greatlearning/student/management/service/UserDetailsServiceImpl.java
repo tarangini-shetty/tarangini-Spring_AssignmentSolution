@@ -6,9 +6,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 
-import com.greatlearning.library.management.entity.User;
-import com.greatlearning.library.management.security.MyUserDetails;
+import com.greatlearning.student.management.entity.User;
 import com.greatlearning.student.management.repository.UserRepository;
+import com.greatlearning.student.management.security.MyUserDetails;
 
 
 

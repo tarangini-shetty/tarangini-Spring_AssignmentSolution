@@ -9,76 +9,74 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.greatlearning.student.management.entity.Student;
+import com.greatlearning.student.management.service.StudentService;
+
 
 @Controller
 @RequestMapping("/students")
-public class BookController {
+public class StudentController {
 	
 	@Autowired
-	private BookService bookService;
+	private StudentService studentService;
+
 	
 	@RequestMapping("/list")
-	public String showBooks(Model model) {
-		List<Book> books = bookService.findAll();
-		model.addAttribute("books",books);
-		return "book-list";
+	public String showStudents(Model model) {
+		List<Student> students = studentService.findAll();
+		model.addAttribute("students",students);
+		return "student-list";
 	}
 	
 	@RequestMapping("/showFormForAdd") 
 	public String showFormForAdd(Model model)
 	{
-		Book book = new Book();
-		model.addAttribute("book",book);
+		Student student = new Student();
+		model.addAttribute("student",student);
 		model.addAttribute("mode","Add");
-		return "book-form";
+		return "student-form";
 	}
 	
 	@RequestMapping("/showFormForUpdate") 
-	public String showFormForUpdate(@RequestParam("bookId") int id, Model model)
+	public String showFormForUpdate(@RequestParam("studentId") int studentid, Model model)
 	{
-		Book book = bookService.findById(id);
-		model.addAttribute("book",book);
+		Student student = studentService.findById(studentid);
+		model.addAttribute("student",student);
 		model.addAttribute("mode","Update");
-		return "book-form";
+		return "student-form";
 
 				
 	}
 	
 	@PostMapping("/save") 
-	public String saveBook(@RequestParam("id") int id, 	@RequestParam("title") String title, @RequestParam("author") String author, @RequestParam("category") String category)
+	public String saveStudent(@RequestParam("studentid") int studentid, 	@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname, @RequestParam("course") String course, @RequestParam("country") String country )
 	{
-		Book book = null;
-		if(id == 0)
+		Student student = null;
+		if(studentid == 0)
 		{
-			book = new Book(title, author, category);
+			student = new Student(firstname, lastname, course, country);
 		}
 		else
 		{
-			book = bookService.findById(id);
-			book.setTitle(title);
-			book.setAuthor(author);
-			book.setCategory(category);
+			student = studentService.findById(studentid);
+			student.setFirstname(firstname);
+			student.setLastname(lastname);
+			student.setCourse(course);
+			student.setCountry(country);
 		}
-		bookService.save(book);
-		return "redirect:/books/list";
+		studentService.save(student);
+		return "redirect:/students/list";
 		
 	}
 	
 	@RequestMapping("/delete") 
-	public String delete(@RequestParam("bookId") int id)
+	public String delete(@RequestParam("studentId") int studentid)
 	{
-		bookService.deleteById(id);
-		return "redirect:/books/list";
+		studentService.deleteById(studentid);
+		return "redirect:/students/list";
 
 	}
 	
-	@RequestMapping("/search") 
-	public String search(@RequestParam("title") String title, 	@RequestParam("author") String author, Model model)
-	{
-		List<Book> booksList = bookService.searchBy(title, author);
-		model.addAttribute("books", booksList);
-		return "book-list";
-	}
 	
 	@RequestMapping("/403")
 	public String show403(Model model) {

@@ -6,5 +6,7 @@ import com.greatlearning.student.management.entity.User;
 
 
 public interface UserRepository extends JpaRepository<User, Long> {
+	
+	public User findByUsername(String username);
 
 }
